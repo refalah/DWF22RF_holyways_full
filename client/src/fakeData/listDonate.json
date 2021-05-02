@@ -1,0 +1,17 @@
+[
+   {
+       "name": "John Walker",
+       "date": "Monday, 12 April 2021",
+       "total": "Rp. 45.000"
+   }, 
+   {
+       "name": "Sam Wilson",
+       "date": "Friday, 9 April 2021",
+       "total": "Rp. 750.000"
+   }, 
+   {
+       "name": "Bucky Barnes",
+       "date": "Saturday, 24 April 2021",
+       "total": "Rp. 95.000"
+   }
+]

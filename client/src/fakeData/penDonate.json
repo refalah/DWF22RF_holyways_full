@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Jason Bourne",
+        "date": "Monday, 12 April 2021",
+        "total": "Rp. 45.000",
+        "image": "/bukti.png"
+    }, 
+    {
+        "name": "Jack Bauer",
+        "date": "Friday, 9 April 2021",
+        "total": "Rp. 750.000",
+        "image": "/bukti.png"
+    }, 
+    {
+        "name": "James Bond",
+        "date": "Saturday, 24 April 2021",
+        "total": "Rp. 95.000",
+        "image": "/bukti.png"
+    }
+ ]

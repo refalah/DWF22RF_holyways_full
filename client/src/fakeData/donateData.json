@@ -1,0 +1,34 @@
+[
+    {
+        "id": 1,
+        "title": "The Strength of a People. Power of Community",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "sum": 50000000,
+        "image": "/dono1.png",
+        "info": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+    },
+    {
+        "id": 2,
+        "title": "Empowering Communities Ending Poverty",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "sum": 3000000,
+        "image": "/dono-2.png",
+        "info": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+    },
+    {
+        "id": 3,
+        "title": "Please our brothers in flores",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "sum": 159000000,
+        "image": "/dono-3.png",
+        "info": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+    },
+    {
+        "id": 3,
+        "title": "Please our brothers in flores",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "sum": 159000000,
+        "image": "/dono-3.png",
+        "info": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+    }
+]
