@@ -46,7 +46,7 @@ const Card = ({ donateData, btnName, routeName}) => {
                 </div>
                 
                 <div className='btns'>
-                    <p>{goal}</p>
+                    <p>{convertToRupiah(goal)}</p>
                     {!state.isLogin ? (
                             <>
                                 <button onClick={() => {setIsOpen(true)}}>{btnName}</button>
