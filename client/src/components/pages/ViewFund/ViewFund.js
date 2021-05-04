@@ -1,30 +1,53 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import {useParams} from 'react-router-dom'
-import donateDatas from '../../../fakeData/donateData.json'
 import {convertToRupiah} from '../../../utils/index'
 import ModalDonate from '../../Modal/ModalDonate'
 import CardListDonation from '../../Card/CardListDonation'
 import PendingDonation from '../../Card/CardPendingDonation'
 import listDonates from '../../../fakeData/listDonate.json'
 import pendingDonates from '../../../fakeData/penDonate.json'
+import { API } from "../../../config/api";
 
 const ViewFund = () => {
     const params = useParams();
     const {id} = params;
 
-    const donateData = donateDatas.find(donateData => donateData.id == id);
+    const [funds, setFunds] = useState([]);
 
-    const [isOpen, setIsOpen] = useState(false)
+   
+
+    const loadFund = async () => {
+        try {
+            const response = await API.get(`/fund/${id}`);
+            setFunds(response.data.data.funds);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        loadFund();
+    }, []);
+
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const image_url = `http://localhost:5000/uploads/${funds.thumbnail}`
+    const goal = `Rp. ${funds.goal}`
 
     return (
         <>
            <div className="container mt-5">
                 <div className="detail-card card-fund mb-5">
-                    <img src={donateData.image} className='card-fund'></img>
+               
+               
+                    <img src={image_url} className='card-fund'></img>
+                    {/* {funds.map(fund =>  */}
                     <div className='detail-container'>
-                        <h1>{donateData.title}</h1>
+                        <h1>{funds.title}</h1>
                         <div className='progress'>
-                            <p>{convertToRupiah(donateData.sum)} </p>
+                            {/* <p>{goal} </p> */}
+                            <p>{funds.goal && convertToRupiah(funds.goal)} </p>
                             <p style={{
                                 fontSize: "12px"
                             }}> gathered from </p>
@@ -34,10 +57,11 @@ const ViewFund = () => {
                             <div className='red-team'></div>
                             <div className='grey-team'></div>
                         </div>
-                        <p className="donate-info">{donateData.info}</p>
+                        <p className="donate-info">{funds.description}</p>
                         <button onClick={() => {setIsOpen(true)}}><a>Donate</a></button>
                         <ModalDonate open={isOpen} onClose={() => setIsOpen(false)}></ModalDonate>
                     </div>
+                    {/* )} */}
                 </div>
                 
                <h1 className='mb-4' style={{marginTop: "100px"}}>List Donation</h1>

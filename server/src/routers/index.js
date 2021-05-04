@@ -17,15 +17,16 @@ router.get("/users", authToken, getUsers);
 
 //Donate
 const {  createDonate, getDonate } = require('../controllers/donate');
-router.post("/donate", uploadFile("imageFile"), createDonate);
+router.post("/donate/:id2", uploadFile("imageFile"),  authToken, createDonate);
 router.get("/donations", getDonate);
 
 //Fund
-const { createFund, getFund, deleteFund, editFund, updateDonate } = require('../controllers/fund');
-router.post("/fund", uploadFile("imageFile"), createFund);
+const { createFund, getFund, deleteFund, editFund, updateDonate, fundDetails } = require('../controllers/fund');
+router.post("/fund", uploadFile("imageFile"), authToken, createFund);
 router.patch("/fund/:id", editFund);
 router.patch("/fund/:id/:id2", updateDonate);
 router.get("/funds", getFund);
+router.get("/fund/:id", fundDetails);
 router.delete("/fund/:id", deleteFund);
 
 // const {test} = require('../controllers/fund')

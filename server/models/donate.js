@@ -26,9 +26,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     status: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
-    proofAttachment: DataTypes.STRING
+    proofAttachment: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
   }, {
     sequelize,
     tableName: 'donates',

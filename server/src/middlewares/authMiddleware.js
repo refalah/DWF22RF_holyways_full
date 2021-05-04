@@ -6,18 +6,28 @@ exports.authToken = async (req, res, next) => {
 
     try {
 
-        const authHeader = req.headers['authorization'];
-        const token = authHeader && authHeader.split(' ')[1];
-        if(token == null){
-            //return res.status(401)
-            res.status(400).send({
-                status: "failed",
-                message: "Something went wrong"
-            })
-        }
+        // const authHeader = req.headers['authorization'];
+        // const token = authHeader && authHeader.split(' ')[1];
+        // if(token == null){
+        //     //return res.status(401)
+        //     res.status(400).send({
+        //         status: "failed",
+        //         message: "Something went wrong"
+        //     })
+        // }
 
-        const verified = jwt.verify(token, process.env.JWT_SECRET, {
-            expiresIn: process.env.JWT_EXPIRES_IN});
+        let header = req.header("Authorization");
+
+        let token = header.replace("Bearer ", "");
+
+        if (!header || !token) {
+            return res.send({
+                status: "Failed",
+                message: "Access Denied"
+            })
+        };
+
+        const verified = jwt.verify(token, process.env.JWT_SECRET);
 
         req.userId = verified.id;
 

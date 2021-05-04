@@ -80,14 +80,17 @@ function ModalRegister({opens, onClose}) {
                 <div className='dark-overlay' onClick={onClose}></div>
                 <div className='modal-register'>
                     <div className='modal-sample-content'>
-                        <div className='modal-header'>
-                            <h1>Register</h1>
-                            {message && (
-                                <div class="alert alert-danger py-1" role="alert">
-                                    <small>{message}</small>
-                                </div>
-                            )}
-                        </div>
+                       
+                        <h1>Register</h1>
+                        {message && (
+                            <div class="alert alert-danger py-1" role="alert" style={{
+                                zIndex: "1",
+                                position: "absolute"
+                            }}>
+                                <small>{message}</small>
+                            </div>
+                        )}
+                       
                         
                         <form onSubmit={(e) => {
                         e.preventDefault();

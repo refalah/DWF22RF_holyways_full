@@ -3,11 +3,12 @@ const {Donate, User, Fund} = require('../../models');
 exports.createDonate = async (req, res) => {
     const {userId, fundId, donateAmount, status, proofAttachment} = req.body;
     try {
-      const user = await User.findOne({where: {id: userId}});
-      const fund = await User.findOne({where: {id: fundId}});
-
+      const id = req.userId;
+      const id2 = req.params.id2;
+      console.log(id2)
+      
       const proofAttachment = req.files.imageFile[0].filename;
-      const donate = await Donate.create({userId: user.id, fundId: fund.id, donateAmount, status, proofAttachment });
+      const donate = await Donate.create({userId: id, fundId: id2, donateAmount, status, proofAttachment });
         
         return res.json(donate);
     } catch (error) {

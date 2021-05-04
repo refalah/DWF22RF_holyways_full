@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import { useHistory } from "react-router-dom";
 //import Input from 'reactstrap'
 import { Form, FormFile } from "react-bootstrap";
@@ -36,19 +36,7 @@ const NewFund = () => {
             formData.append("imageFile", form.thumbnail[0], form.thumbnail[0].name)
             formData.set("goal", form.goal);
             formData.set("description", form.description);
-           //userId
-
-            // const config = {
-            //     headers: {
-            //         "Content-Type": "application/json"
-            //     }
-            // }
-            // const body = JSON.stringify({
-            //     title,
-            //     thumbnail,
-            //     goal,
-            //     description
-            // });
+           
 
             await API.post("/fund", formData, config);
 
@@ -59,7 +47,16 @@ const NewFund = () => {
         }
     }
 
-    
+    const [chosenFile, setChosenFile] = useState()
+   
+    useEffect(() => {
+        if(!form.imageFile){
+            setChosenFile("No file chosen")
+        }
+
+        
+
+    }, [form.imageFile])
 
     return (
         <div>
@@ -75,7 +72,11 @@ const NewFund = () => {
                 <Form.Group formValue={form} className='FormGroup'>
                     <Form.Control type="text" placeholder="Title" name="title" onChange={(e) => onChange(e)}/>
                     <br />
-                    <Form.File id="exampleFormControlFile1" type="file" label="Upload Thumbnail" placeholder="choose" name="thumbnail" onChange={(e) => onChange(e)}/>
+                  
+                    <input type="file" id="add-thumb" name="thumbnail" onChange={(e) => onChange(e)} hidden/>
+                    <label for="add-thumb" id="label-thumb">Attach Thumbnail</label>
+                    <span id="file-chosen">{chosenFile}</span>
+                    <br />
                     <br />
                     <Form.Control type="number" placeholder="Goals Donation" name="goal" onChange={(e) => onChange(e)}/>
                     <br />
@@ -89,7 +90,11 @@ const NewFund = () => {
                 </form>
                 </div>
             </div>
+
+            
         </div>
+
+        
     )
 }
 

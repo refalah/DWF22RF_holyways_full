@@ -41,7 +41,7 @@ function RaiseFund() {
                     <div className='row'>
                         {funds&&funds.map((fund, index) => (
                             <div className='col-sm-4' key={fund.id + index}>
-                                <Card donateData = { fund } btnName = { 'View Fund' } routeName = { "fund" } />
+                                <Card fundData = { fund } btnName = { 'View Fund' } routeName = { "fund" } />
                             </div>
                         ))}
                         

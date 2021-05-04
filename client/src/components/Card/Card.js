@@ -5,9 +5,9 @@ import { UserContext } from '../../contexts/userContext'
 import ModalLogin from '../Modal/ModalLogin'
 require('dotenv').config();
 
-const Card = ({ donateData, btnName, routeName}) => {
+const Card = ({ fundData, btnName, routeName}) => {
     //const { id, title, description, sum, image} = donateData;
-    const { id, title, goal, description, thumbnail, image_url} = donateData;
+    const { id, title, goal, description, thumbnail, image_url} = fundData;
     //const image_url= process.env.FILE_PATH + donateData.thumbnail
     // const image_url = `http://localhost:5000/uploads/${thumbnail}`
     console.log(image_url)
@@ -36,7 +36,10 @@ const Card = ({ donateData, btnName, routeName}) => {
                     <div className='card-bodies'>
                         <p style={{
                             height: "50px",
-                            fontSize: "12px"
+                            fontSize: "12px",
+                            overflow:"hidden",
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis"
                         }}>{description}</p>
                     </div>
                     <div className='progress-bar'>
@@ -46,7 +49,12 @@ const Card = ({ donateData, btnName, routeName}) => {
                 </div>
                 
                 <div className='btns'>
-                    <p>{convertToRupiah(goal)}</p>
+                    <p style={{
+                        width: "130px",
+                        overflow:"hidden",
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis"
+                    }}>{convertToRupiah(goal)}</p>
                     {!state.isLogin ? (
                             <>
                                 <button onClick={() => {setIsOpen(true)}}>{btnName}</button>

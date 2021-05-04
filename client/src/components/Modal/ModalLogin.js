@@ -84,6 +84,16 @@ function ModalLogin({open, onClose}) {
 
                 <div className='modal-sample-content'>
                     <h1>Login</h1>
+
+                    {message && (
+                            <div class="alert alert-danger py-1" role="alert" style={{
+                                zIndex: "1",
+                                position: "absolute"
+                            }}>
+                                <small>{message}</small>
+                            </div>
+                        )}
+
                     <form onSubmit={(e) => {
                         e.preventDefault();
                         onSubmit(e);
@@ -95,11 +105,7 @@ function ModalLogin({open, onClose}) {
                             <input type='password' name='password' placeholder='Password' className='password-input grab-input'  onChange={(e) => onChange(e)}></input>
                         </div>
                         <button type='submit' style={{textAlign: 'center'}} className='modal-sample-link' >Login</button>
-                        {message && (
-                            <div class="alert alert-danger py-1" role="alert">
-                                <small>{message}</small>
-                            </div>
-                        )}
+                        
                         <p style={{textAlign: 'center'}}>Don't have an account ?
                             <span onClick={() => {
                                     handleCloseLogin();

@@ -191,7 +191,7 @@ h3 {
 .input-group-sample {
     display: flex;
     flex-direction: column;
-    /* margin-top: 10%; */
+    margin-top: 15%;
 }
 
 .grab-input {
@@ -215,6 +215,13 @@ h3 {
     color: white;
     font-size: 18px;
     cursor: pointer;
+}
+
+.img-proof {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .img-approve {
@@ -252,8 +259,14 @@ h3 {
 
 .card-image-container img{
     overflow: hidden;
+    object-fit: cover;
     height: 270px;
+    width: 290px;
 }
+
+/* .img-dono {
+    height: 300px;
+} */
 
 .card-content {
     margin: 1rem;
@@ -646,6 +659,20 @@ h6, p {
     padding: 5px 20px;
     border-radius: 10px;
 }
+
+#label-thumb{
+    background: #C32424;
+    color: white;
+    border: none;
+    padding: 5px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#file-chosen{
+    margin-left: 0.3rem;
+    font-family: sans-serif;
+  }
 
 .btn-container {
     width: 100%;
