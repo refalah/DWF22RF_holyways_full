@@ -18,7 +18,7 @@ router.get("/users", authToken, getUsers);
 //Donate
 const {  createDonate, getDonate } = require('../controllers/donate');
 router.post("/donate/:id2", uploadFile("imageFile"),  authToken, createDonate);
-router.get("/donations", getDonate);
+router.get("/donations/:id", getDonate);
 
 //Fund
 const { createFund, getFund, deleteFund, editFund, updateDonate, fundDetails } = require('../controllers/fund');

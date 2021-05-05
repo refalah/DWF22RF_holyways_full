@@ -26,7 +26,7 @@ const ViewFund = () => {
 
     const loadDonate = async () => {
         try {
-            const response = await API.get(`/donations`);
+            const response = await API.get(`/donations/${id}`);
             setDonos(response.data.data.donos);
         } catch (error) {
             console.log(error);

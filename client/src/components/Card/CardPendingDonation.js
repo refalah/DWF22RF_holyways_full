@@ -1,8 +1,10 @@
 import React, {useState, useContext} from 'react'
-
+import {useParams} from 'react-router-dom'
 import ModalApprove from '../Modal/ModalApprove'
 
 const CardPendingDonation = ({donoData}) => {
+    const params = useParams();
+    const {id} = params;
     const {donateAmount, status, proofAttachment, createdAt} = donoData;
 
     const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +14,7 @@ const CardPendingDonation = ({donoData}) => {
                 <div className='list-donation-content'>
                     <div className='list-donation-name'>
                         {/* User name from userId */}
-                        <p>Placeholder</p>
+                        <p>{donoData.User.fullName}</p>
                     </div>
                     <div className='list-donation-date'>
                         <p>{createdAt}</p>

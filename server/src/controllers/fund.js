@@ -161,16 +161,8 @@ exports.fundDetails = async (req, res) => {
     try {
         let funds = await Fund.findOne({where: {id}});
 
-        funds = JSON.parse(JSON.stringify(funds));
-        // funds = funds.map((fund) => {
-        //   return {
-        //     ...fund,
-        //     image_url: process.env.PATH_KEY + fund.thumbnail,
-        //   };
-        // });
-        
-        
-        console.log(funds)
+        funds = JSON.parse(JSON.stringify(funds));   
+      
           
         res.send({
           status: "success",

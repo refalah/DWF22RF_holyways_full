@@ -21,14 +21,18 @@ exports.createDonate = async (req, res) => {
 }
 
 exports.getDonate = async (req, res) => {
+  
+    //const id = req.params.id;
+    const id = req.params.id;
+    console.log(id)
 
     try {
     //    const donate = await Donate.findAll({include: User});
        //const donate = await Donate.findAll({include: {User, Fund}});
 
-    //    return res.json(donate);
+ 
 
-    let donos = await Donate.findAll({
+    let donos = await Donate.findAll({where: {fundId: id},
         include: [
           {
             model: User,
@@ -43,8 +47,9 @@ exports.getDonate = async (req, res) => {
               exclude: ["createdAt", "updatedAt"]
             }
           }
-      ],
-      });
+        ],
+      
+    });
 
       donos = JSON.parse(JSON.stringify(donos));
       donos = donos.map((dono) => {
@@ -55,6 +60,7 @@ exports.getDonate = async (req, res) => {
       });
       
       console.log(donos)
+      console.log(donos.fundId)
 
       res.send({
         status: "success",

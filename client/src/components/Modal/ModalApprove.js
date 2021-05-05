@@ -16,9 +16,9 @@ const ModalApprove = ({open, onClose, donoData}) => {
 
                 <div className='modal-sample-content'>
                     {/* User name from userId */}
-                    {/* <h5 style={{
+                    <h5 style={{
                         fontWeight: "bold"
-                    }}>{name}</h5> */}
+                    }}>{donoData.User.fullName}</h5>
                     <div className='input-group-sample' style={{marginTop: "5px"}}>
                         <input type='text' placeholder={donateAmount} className='email-input grab-input' readOnly></input>
                     </div>
