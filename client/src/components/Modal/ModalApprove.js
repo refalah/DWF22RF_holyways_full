@@ -5,13 +5,8 @@ import ReactDom from 'react-dom'
 import {useParams} from 'react-router-dom'
 import pendingDonates from '../../fakeData/penDonate.json'
 
-const ModalApprove = ({open, onClose, pendingDonate}) => {
-    // const params = useParams();
-    // const {id} = params;
-
-    // const pendingDonate = pendingDonates.find(pendingDonate => pendingDonate.id == id);
-
-    const {name, date, total, image} = pendingDonate;
+const ModalApprove = ({open, onClose, donoData}) => {
+    const {donateAmount, status, proofAttachment, createdAt, image_url} = donoData;
     
     if (!open) return null
     return ReactDom.createPortal (
@@ -20,13 +15,15 @@ const ModalApprove = ({open, onClose, pendingDonate}) => {
             <div className='modal-approve'>
 
                 <div className='modal-sample-content'>
-                    <h5 style={{
+                    {/* User name from userId */}
+                    {/* <h5 style={{
                         fontWeight: "bold"
-                    }}>{name}</h5>
+                    }}>{name}</h5> */}
                     <div className='input-group-sample' style={{marginTop: "5px"}}>
-                        <input type='text' placeholder={total} className='email-input grab-input' readOnly></input>
+                        <input type='text' placeholder={donateAmount} className='email-input grab-input' readOnly></input>
                     </div>
-                    <img src={image} className='img-approve'></img>
+                    {/* ProofAttachment from fundId */}
+                    <img src={image_url} className='img-approve'></img>
                     <div style={{textAlign: 'center'}} className='modal-sample-link'>Approve</div>
                 </div>
             </div>

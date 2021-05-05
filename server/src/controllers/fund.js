@@ -47,9 +47,7 @@ exports.createFund = async (req, res) => {
 
 exports.getFund = async (req, res) => {
     try {
-        // const funds = await Fund.findAll({include: [{User, Fund}]})
-  
-        // return res.json(funds)
+       
         const path = process.env.PATH_KEY;
         //const thumbnail = req.files.imageFile[0].filename;
 

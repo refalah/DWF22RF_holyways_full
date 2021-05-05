@@ -28,11 +28,10 @@ exports.getDonate = async (req, res) => {
 
     //    return res.json(donate);
 
-    const donations = await Donate.findAll({
+    let donos = await Donate.findAll({
         include: [
           {
             model: User,
-            // as: "user",
             attributes: {
               exclude: ["createdAt", "updatedAt", "password"]
             }
@@ -40,34 +39,34 @@ exports.getDonate = async (req, res) => {
           
           {
             model: Fund,
-            //as: "donations",
-            // through: {
-            //   model: Donate,
-            //   //as: "conjuction",
-            //   //attributes: []
-            // },
             attributes: {
               exclude: ["createdAt", "updatedAt"]
             }
           }
       ],
-
-        attributes: {
-          exclude: ["createdAt", "updatedAt"]
-        }
       });
+
+      donos = JSON.parse(JSON.stringify(donos));
+      donos = donos.map((dono) => {
+        return {
+          ...dono,
+          image_url: process.env.PATH_KEY + dono.proofAttachment
+        };
+      });
+      
+      console.log(donos)
 
       res.send({
         status: "success",
         data: {
-          donations
+          donos
         }
     });
 
 
     } catch (error) {
         console.log(error);
-        res.status(500).send({
+        res.send({
             status: "failed",
             message: "server error"
         })

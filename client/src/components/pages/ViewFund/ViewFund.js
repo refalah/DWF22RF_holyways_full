@@ -5,7 +5,6 @@ import ModalDonate from '../../Modal/ModalDonate'
 import CardListDonation from '../../Card/CardListDonation'
 import PendingDonation from '../../Card/CardPendingDonation'
 import listDonates from '../../../fakeData/listDonate.json'
-import pendingDonates from '../../../fakeData/penDonate.json'
 import { API } from "../../../config/api";
 
 const ViewFund = () => {
@@ -13,7 +12,7 @@ const ViewFund = () => {
     const {id} = params;
 
     const [funds, setFunds] = useState([]);
-
+    const [donos, setDonos] = useState([]);
    
 
     const loadFund = async () => {
@@ -25,9 +24,21 @@ const ViewFund = () => {
         }
     }
 
+    const loadDonate = async () => {
+        try {
+            const response = await API.get(`/donations`);
+            setDonos(response.data.data.donos);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     useEffect(() => {
         loadFund();
+        loadDonate();
     }, []);
+    
+   
 
 
     const [isOpen, setIsOpen] = useState(false);
@@ -76,9 +87,9 @@ const ViewFund = () => {
                 <h1 className='mb-4' style={{marginTop: "40px"}}>Donation has not been approved</h1>
                     {/* <CardListDonation />
                     <CardListDonation /> */}
-                    {pendingDonates.map((pendingDonate, index) => (
-                        <div key={pendingDonate.id + index}>
-                            <PendingDonation pendingDonate={ pendingDonate }/>
+                    {donos&&donos.map((dono, index) => (
+                        <div key={dono.id + index}>
+                            <PendingDonation donoData = { dono }/>
                         </div>
                     ))}
                 </div> 
