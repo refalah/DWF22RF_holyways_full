@@ -1,33 +1,49 @@
 const {Fund, User, Donate} = require('../../models');
 require('dotenv').config();
+const Joi = require('joi');
 
 exports.createFund = async (req, res) => {
     const {userId, title, thumbnail, goal, description} = req.body;
     //const data = req.body;
     try {
         //const user = await User.findOne({where: {id: req.userId}});
+
+        // const schema = Joi.object({
+        //     title: Joi.string()
+        //     .min(3)
+        //     .max(30)
+        //     .required()
+        //     .messages({
+               
+        //         'string.empty': `"a" cannot be an empty field`,
+        //         'string.max': `should have a minimum length of {#limit}`
+        //     }),
+            
+        //     goal: Joi.number()
+        //     .min(1)
+        //     .max(9999999)
+        //     .required(),
+
+        //     description: Joi.string()
+        //     .min(3)
+        //     .max(50)
+        //     .required(),
+        // });
+
+        // const value = await schema.validateAsync(req.body);
+
+
+        // if (!value) {
+        //     Joi.isError(new Error()); // returns false
+        // }
+
         const id = req.userId;
 
         const path = process.env.PATH_KEY;
         const thumbnail = req.files.imageFile[0].filename;
 
         const fund = await Fund.create({title, thumbnail, goal, description, userId:id});
-
-        // const image = req.files;
-        // console.log(image);
-
-        // res.status(200).send({
-        //     status: "success",
-        //     data: {
-        //       fund: {
-        //         title: fund.title,
-                
-        //         goal: fund.goal,
-        //         description: fund.description,
-        //         thumbnail: image
-        //       }
-        //     }
-        // });
+        
         res.send({
             status: "success",
             data: {
@@ -88,7 +104,7 @@ exports.getFund = async (req, res) => {
           };
         });
         
-        console.log(funds)
+        // console.log(funds)
           
         res.send({
           status: "success",
@@ -109,23 +125,29 @@ exports.editFund = async (req, res) => {
 
     const id = req.params.id;
     const data = req.body;
+    const {userId, title, thumbnail, goal, description} = req.body;
 
     try {
-        const fund = await Fund.findOne({where: {id}});
+        //const fund = await Fund.findOne({where: {id}});
+        const thumbnail = req.files.imageFile[0].filename;
 
-        if(!fund){
-            return res.status(400).send({
-                status: "Failed",
-                message: "Data not found",
-            });
-        }
+        const edit = await Fund.update({userId, title, thumbnail, goal, description}, {where: {id}});
 
-        const edit = await Fund.update(data, {where: {id}});
+        console.log(edit)
 
-        return res.json(edit);
+        res.send({
+            status: "success",
+            data: {
+              edit
+            }
+          });
 
     } catch (error) {
-        
+        console.log(error);
+        res.send({
+            status: "failed",
+            message: "something went wrong"
+        })
     }
 }
 

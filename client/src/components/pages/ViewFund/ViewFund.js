@@ -6,6 +6,8 @@ import CardListDonation from '../../Card/CardListDonation'
 import PendingDonation from '../../Card/CardPendingDonation'
 import listDonates from '../../../fakeData/listDonate.json'
 import { API } from "../../../config/api";
+import { useHistory } from "react-router-dom";
+import {Dropdown, DropdownButton} from 'react-bootstrap'
 
 const ViewFund = () => {
     const params = useParams();
@@ -13,6 +15,7 @@ const ViewFund = () => {
 
     const [funds, setFunds] = useState([]);
     const [donos, setDonos] = useState([]);
+    const router = useHistory();
    
 
     const loadFund = async () => {
@@ -38,8 +41,13 @@ const ViewFund = () => {
         loadDonate();
     }, []);
     
-   
-
+    const editFund = () => {
+        router.push(`/edit-fund/${id}`);
+    }
+    
+    const deleteFund = () => {
+        router.push(`/edit-fund/${id}`);
+    }
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -49,6 +57,14 @@ const ViewFund = () => {
     return (
         <>
            <div className="container mt-5">
+                <div style={{display: "flex", justifyContent: "flex-end"}}>
+                    {/* <button onClick={editFund}><a>Edit</a></button>
+                    <button onClick={deleteFund}><a>Delete</a></button> */}
+                    <DropdownButton id="dropdown-basic-button" title="Options" variant="secondary">
+                        <Dropdown.Item  onClick={editFund} style={{width: "5px"}}>Edit</Dropdown.Item>
+                        <Dropdown.Item onClick={deleteFund} style={{width: "5px"}}>Delete</Dropdown.Item>
+                    </DropdownButton>
+                </div>
                 <div className="detail-card card-fund mb-5">
                
                

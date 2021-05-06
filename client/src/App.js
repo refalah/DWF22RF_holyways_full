@@ -18,6 +18,7 @@ import NewFund from './components/pages/NewFund/NewFund';
 import ViewFund from './components/pages/ViewFund/ViewFund';
 
 import ScrollIntoView from "./components/ScrollIntoView";
+import EditFund from './components/pages/EditFund/EditFund'
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
             <PrivateRoute path='/raise-fund' exact component={RaiseFund}></PrivateRoute>
             <PrivateRoute path='/new-fund' exact component={NewFund}></PrivateRoute>
             <PrivateRoute path='/fund/:id' exact component={ViewFund}></PrivateRoute>
+            <PrivateRoute path='/edit-fund/:id' exact component={EditFund}></PrivateRoute>
             <PrivateRoute path='/donate-detail/:id' exact component={DonateDetail}></PrivateRoute>
           </Switch>
         </ScrollIntoView>

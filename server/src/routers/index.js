@@ -23,7 +23,7 @@ router.get("/donations/:id", getDonate);
 //Fund
 const { createFund, getFund, deleteFund, editFund, updateDonate, fundDetails } = require('../controllers/fund');
 router.post("/fund", uploadFile("imageFile"), authToken, createFund);
-router.patch("/fund/:id", editFund);
+router.patch("/fund/:id", uploadFile("imageFile"), editFund);
 router.patch("/fund/:id/:id2", updateDonate);
 router.get("/funds", getFund);
 router.get("/fund/:id", fundDetails);

@@ -38,7 +38,7 @@ const NewFund = () => {
             formData.set("description", form.description);
            
 
-            await API.post("/fund", formData, config);
+            const response = await API.post("/fund", formData, config);
 
             router.push("/raise-fund");
 
