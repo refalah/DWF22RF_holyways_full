@@ -5,7 +5,7 @@ import {useParams} from 'react-router-dom'
 import ReactDom from 'react-dom'
 import { API } from "../../config/api";
 
-function ModalDonate({open, onClose}) {
+function ModalDonate({open, onClose, funcLoad}) {
     const params = useParams();
     const {id} = params;
     const [ , dispatch] = useContext(UserContext);
@@ -36,6 +36,7 @@ function ModalDonate({open, onClose}) {
 
             await API.post(`/donate/${id}`, formData, config);
 
+            funcLoad();
             onClose();
 
         } catch (error) {

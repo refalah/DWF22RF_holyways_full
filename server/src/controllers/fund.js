@@ -8,39 +8,53 @@ exports.createFund = async (req, res) => {
     try {
         //const user = await User.findOne({where: {id: req.userId}});
 
-        // const schema = Joi.object({
-        //     title: Joi.string()
-        //     .min(3)
-        //     .max(30)
-        //     .required()
-        //     .messages({
+        const schema = Joi.object({
+            title: Joi.string()
+            .min(3)
+            .max(30)
+            .required()
+            .messages({
                
-        //         'string.empty': `"a" cannot be an empty field`,
-        //         'string.max': `should have a minimum length of {#limit}`
-        //     }),
+                'string.empty': `"a" cannot be an empty field`,
+                'string.max': `should have a minimum length of {#limit}`
+            }),
+
+            // thumbnail: Joi.string().required(),
             
-        //     goal: Joi.number()
-        //     .min(1)
-        //     .max(9999999)
-        //     .required(),
+            goal: Joi.number()
+            .min(1)
+            .max(99999999)
+            .required(),
 
-        //     description: Joi.string()
-        //     .min(3)
-        //     .max(50)
-        //     .required(),
-        // });
+            description: Joi.string()
+            .min(3)
+            .max(1050)
+            .required(),
+        });
 
-        // const value = await schema.validateAsync(req.body);
+        const value = await schema.validateAsync(req.body);
 
 
-        // if (!value) {
-        //     Joi.isError(new Error()); // returns false
-        // }
+        if (!value) {
+            Joi.isError(new Error()); // returns false
+            // return res.send({
+            //   message: "Email already exists",
+            // });
+        }
+
+        console.log(value);
 
         const id = req.userId;
 
         const path = process.env.PATH_KEY;
         const thumbnail = req.files.imageFile[0].filename;
+
+        if(thumbnail == null){
+          return res.send({
+            status: "failed",
+            message: "image does not exist",
+          });
+        }
 
         const fund = await Fund.create({title, thumbnail, goal, description, userId:id});
         
@@ -56,7 +70,7 @@ exports.createFund = async (req, res) => {
         console.log(error);
         res.send({
             status: "failed",
-            message: "something went wrong"
+            message: error.details[0].message
         })
     }
 }
@@ -129,11 +143,45 @@ exports.editFund = async (req, res) => {
 
     try {
         //const fund = await Fund.findOne({where: {id}});
+        const schema = Joi.object({
+          title: Joi.string()
+          .min(3)
+          .max(30)
+          .required()
+          .messages({
+             
+              'string.empty': `"a" cannot be an empty field`,
+              'string.max': `should have a minimum length of {#limit}`
+          }),
+
+          // thumbnail: Joi.string().required(),
+          
+          goal: Joi.number()
+          .min(1)
+          .max(99999999)
+          .required(),
+
+          description: Joi.string()
+          .min(3)
+          .max(1050)
+          .required(),
+      });
+
+      const value = await schema.validateAsync(req.body);
+
+
+      if (!value) {
+          Joi.isError(new Error()); // returns false
+          // return res.send({
+          //   message: "Email already exists",
+          // });
+      }
+
         const thumbnail = req.files.imageFile[0].filename;
 
         const edit = await Fund.update({userId, title, thumbnail, goal, description}, {where: {id}});
 
-        console.log(edit)
+        //console.log(value)
 
         res.send({
             status: "success",
@@ -146,7 +194,7 @@ exports.editFund = async (req, res) => {
         console.log(error);
         res.send({
             status: "failed",
-            message: "something went wrong"
+            message: error.details[0].message
         })
     }
 }
@@ -208,10 +256,14 @@ exports.deleteFund = async (req, res) => {
         const fund =  await Fund.findOne({where: {id}})
 
         if (fund) {
-            await Fund.destroy({where: {id}})
+            await Fund.destroy({where: {id},
+              include: [
+                {model: Donate}
+              ]
+            })
         }
 
-        return res.status(200).send({
+        return res.send({
             status: "success",
             message: "delete success"
         })

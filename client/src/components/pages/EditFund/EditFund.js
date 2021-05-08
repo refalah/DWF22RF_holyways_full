@@ -10,11 +10,11 @@ function EditFund() {
     const [funds, setFunds] = useState([]);
     const [idForUpdate, setIdForUpdate] = useState(null);
     const router = useHistory();
-    
+    const [message, setMessage] = useState('');
 
     const [form, setForm] = useState({
         title: "",
-        thumbnail: null,
+        //thumbnail: "",
         goal: "",
         description: ""
     });
@@ -39,43 +39,10 @@ function EditFund() {
         })
     };
 
-    // const getFundById = async (id) => {
-    //     try {
-    //         const response = await API.get(`/fund/${id}`);
-    //         //setFunds(response.data.data.funds)
-    //         const fund = response.data.data
-    //         setIdForUpdate(fund.id);
-
-    //         setForm({
-    //             title: fund.title ? fund.title : "",
-    //             thumbnail: fund.thumbnail ? fund.thumbnail : null,
-    //             goal: fund.goal ? fund.goal : "",
-    //             description: fund.description ? fund.description : ""
-    //         })
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     getFundById();
-    // }, []);
-
 
     const handleSubmit = async () => {
         try {
-            // const config = {
-            //     headers: {
-            //         "Content-type": "application/json"
-            //     }
-            // }
-
-            // const body = JSON.stringify({
-            //     title: form.title,
-            //     thumbnail: form.thumbnail,
-            //     goal: form.goal,
-            //     description: form.description
-            // });
+           
 
             const config = {
                 headers: {
@@ -91,17 +58,26 @@ function EditFund() {
 
             const response = await API.patch(`/fund/${id}`, formData, config);
 
-            setIdForUpdate(null);
+            //setIdForUpdate(null);
 
-            setForm({
-                title: "",
-                thumbnail: null,
-                goal: "",
-                description: ""
+            // setForm({
+            //     title: "",
+            //     thumbnail: "",
+            //     goal: "",
+            //     description: ""
                 
-            })
+            // })
 
-            router.push("/raise-fund");
+            setMessage(response.data.message);
+
+            if(response.data.status === "failed"){
+                router.push(`/edit-fund/${id}`)
+            } else {
+                router.push("/raise-fund");
+            }
+
+           
+
 
         } catch (error) {
             console.log(error);
@@ -115,6 +91,14 @@ function EditFund() {
                 <div className='fund-header card-fund'>
                     <h3>Edit Fund</h3>
                 </div>
+                {message && (
+                    <div class="alert alert-danger py-1" role="alert" style={{
+                        zIndex: "1",
+                        position: "absolute"
+                    }}>
+                        <small>{message}</small>
+                    </div>
+                )}
                 <div className='form-container mt-5'>
                 <form onSubmit={(e) => {
                         e.preventDefault();

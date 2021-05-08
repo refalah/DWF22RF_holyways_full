@@ -14,6 +14,8 @@ const NewFund = () => {
         description: ""
     });
 
+    const [message, setMessage] = useState('');
+
     const { title, thumbnail, goal, description } = form;
 
     const onChange = (e) => {
@@ -40,7 +42,15 @@ const NewFund = () => {
 
             const response = await API.post("/fund", formData, config);
 
-            router.push("/raise-fund");
+            setMessage(response.data.message);
+
+            if(response.data.status === "failed"){
+                router.push('/new-fund')
+            } else {
+                router.push("/raise-fund");
+            }
+
+            
 
         } catch (error) {
             console.log(error);
@@ -54,8 +64,6 @@ const NewFund = () => {
             setChosenFile("No file chosen")
         }
 
-        
-
     }, [form.imageFile])
 
     return (
@@ -64,6 +72,14 @@ const NewFund = () => {
                 <div className='fund-header card-fund'>
                     <h3>Make Raise Fund</h3>
                 </div>
+                {message && (
+                    <div class="alert alert-danger py-1" role="alert" style={{
+                        zIndex: "1",
+                        position: "absolute"
+                    }}>
+                        <small>{message}</small>
+                    </div>
+                )}
                 <div className='form-container mt-5'>
                 <form onSubmit={(e) => {
                         e.preventDefault();

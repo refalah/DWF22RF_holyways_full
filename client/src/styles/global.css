@@ -37,6 +37,7 @@ h3 {
 .card-fund {
     margin: 0;
     padding: 0;
+    object-fit: cover;
 }
 
 /* Navbar */

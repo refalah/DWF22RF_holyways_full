@@ -7,7 +7,7 @@ import PendingDonation from '../../Card/CardPendingDonation'
 import listDonates from '../../../fakeData/listDonate.json'
 import { API } from "../../../config/api";
 import { useHistory } from "react-router-dom";
-import {Dropdown, DropdownButton} from 'react-bootstrap'
+import {Dropdown, DropdownButton, Modal, Button} from 'react-bootstrap'
 
 const ViewFund = () => {
     const params = useParams();
@@ -15,6 +15,10 @@ const ViewFund = () => {
 
     const [funds, setFunds] = useState([]);
     const [donos, setDonos] = useState([]);
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     const router = useHistory();
    
 
@@ -45,8 +49,14 @@ const ViewFund = () => {
         router.push(`/edit-fund/${id}`);
     }
     
-    const deleteFund = () => {
-        router.push(`/edit-fund/${id}`);
+    const deleteFund = async () => {
+        try {
+            await API.delete(`/fund/${id}`);
+
+            router.push("/raise-fund");
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const [isOpen, setIsOpen] = useState(false);
@@ -61,12 +71,29 @@ const ViewFund = () => {
                     {/* <button onClick={editFund}><a>Edit</a></button>
                     <button onClick={deleteFund}><a>Delete</a></button> */}
                     <DropdownButton id="dropdown-basic-button" title="Options" variant="secondary">
-                        <Dropdown.Item  onClick={editFund} style={{width: "5px"}}>Edit</Dropdown.Item>
-                        <Dropdown.Item onClick={deleteFund} style={{width: "5px"}}>Delete</Dropdown.Item>
+                        <Dropdown.Item  onClick={editFund} >Edit</Dropdown.Item>
+                        <Dropdown.Item onClick={handleShow} >Delete</Dropdown.Item>
                     </DropdownButton>
                 </div>
                 <div className="detail-card card-fund mb-5">
-               
+                <Modal show={show} onHide={handleClose}>
+                  {/* <Modal.Header closeButton>
+                    <Modal.Title>Modal heading</Modal.Title>
+                  </Modal.Header> */}
+                  <Modal.Body className="sm"><p style = {{
+                      fontSize : "20px",
+                      padding: "5px"
+                  }}>Are you sure you want to delete this fund?</p></Modal.Body>
+                  <Modal.Footer>
+                   
+                    <Button variant="secondary" onClick={handleClose}>
+                      Cancel
+                    </Button>
+                    <Button variant="danger" onClick={deleteFund}>
+                      Confirm
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
                
                     <img src={image_url} className='card-fund'></img>
                     {/* {funds.map(fund =>  */}
@@ -86,7 +113,7 @@ const ViewFund = () => {
                         </div>
                         <p className="donate-info">{funds.description}</p>
                         <button onClick={() => {setIsOpen(true)}}><a>Donate</a></button>
-                        <ModalDonate open={isOpen} onClose={() => setIsOpen(false)}></ModalDonate>
+                        <ModalDonate open={isOpen} onClose={() => setIsOpen(false)} funcLoad={loadDonate}></ModalDonate>
                     </div>
                     {/* )} */}
                 </div>
