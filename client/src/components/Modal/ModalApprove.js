@@ -1,12 +1,28 @@
 import React, {useState, useContext} from 'react'
 import ReactDom from 'react-dom'
+import { API } from "../../config/api";
 
-
-import {useParams} from 'react-router-dom'
+import {useHistory, useParams} from 'react-router-dom'
 import pendingDonates from '../../fakeData/penDonate.json'
 
 const ModalApprove = ({open, onClose, donoData}) => {
-    const {donateAmount, status, proofAttachment, createdAt, image_url} = donoData;
+    const params = useParams();
+    const router = useHistory();
+    const {id, donateAmount, status, proofAttachment, createdAt, image_url} = donoData;
+    
+
+    console.log(status)
+
+    const handleApprove = async () => {
+        try {
+            await API.patch(`/approve/${id}`);
+            router.push(`/fund/${id}`)
+            onClose();
+        } catch (error) {
+            console.log(error);
+        }
+        console.log(`hello ${id}`)
+    }
     
     if (!open) return null
     return ReactDom.createPortal (
@@ -24,7 +40,7 @@ const ModalApprove = ({open, onClose, donoData}) => {
                     </div>
                     {/* ProofAttachment from fundId */}
                     <img src={image_url} className='img-approve'></img>
-                    <div style={{textAlign: 'center'}} className='modal-sample-link'>Approve</div>
+                    <div style={{textAlign: 'center'}} onClick={handleApprove} className='modal-sample-link'>Approve</div>
                 </div>
             </div>
         </div>,

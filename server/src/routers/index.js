@@ -16,9 +16,10 @@ router.delete("/user/:id", deleteUser);
 router.get("/users", authToken, getUsers);
 
 //Donate
-const {  createDonate, getDonate } = require('../controllers/donate');
+const {  createDonate, getDonate, approveDonate } = require('../controllers/donate');
 router.post("/donate/:id2", uploadFile("imageFile"),  authToken, createDonate);
 router.get("/donations/:id", getDonate);
+router.patch("/approve/:id", approveDonate);
 
 //Fund
 const { createFund, getFund, deleteFund, editFund, updateDonate, fundDetails } = require('../controllers/fund');

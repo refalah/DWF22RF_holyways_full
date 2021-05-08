@@ -8,7 +8,7 @@ exports.createDonate = async (req, res) => {
       console.log(id2)
       
       const proofAttachment = req.files.imageFile[0].filename;
-      const donate = await Donate.create({userId: id, fundId: id2, donateAmount, status, proofAttachment });
+      const donate = await Donate.create({userId: id, fundId: id2, donateAmount, status: "Pending", proofAttachment });
         
         return res.json(donate);
     } catch (error) {
@@ -20,6 +20,23 @@ exports.createDonate = async (req, res) => {
     }
 }
 
+exports.approveDonate = async (req, res) => {
+  const id = req.params.id;
+  const data = req.body
+
+  try {
+    const approve = await Donate.update({...data, status: "Approved"}, {where: {id: id}})
+   
+    return res.json(approve);
+  } catch (error) {
+    console.log(error);
+    res.send({
+        status: "failed",
+        message: "something went wrong"
+    })
+  }
+}
+
 exports.getDonate = async (req, res) => {
   
     //const id = req.params.id;
@@ -27,11 +44,7 @@ exports.getDonate = async (req, res) => {
     console.log(id)
 
     try {
-    //    const donate = await Donate.findAll({include: User});
-       //const donate = await Donate.findAll({include: {User, Fund}});
-
- 
-
+    
     let donos = await Donate.findAll({where: {fundId: id},
         include: [
           {

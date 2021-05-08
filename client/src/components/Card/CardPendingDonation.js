@@ -6,6 +6,7 @@ const CardPendingDonation = ({donoData}) => {
     const params = useParams();
     const {id} = params;
     const {donateAmount, status, proofAttachment, createdAt} = donoData;
+    
 
     const [isOpen, setIsOpen] = useState(false);
     return (
@@ -21,7 +22,11 @@ const CardPendingDonation = ({donoData}) => {
                     </div>
                     <div className='list-donation-total'>
                         <p>{donateAmount}</p>
+                        {status == "Pending" ? (
                         <button className='status-donate' onClick={() => {setIsOpen(true)}}>View</button>
+                        ) : (
+                            <div></div>
+                        )}
                         <ModalApprove donoData ={ donoData } open={isOpen} onClose={() => setIsOpen(false)}></ModalApprove>
                     </div>
                 </div>
