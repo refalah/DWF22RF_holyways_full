@@ -121,18 +121,18 @@ const ViewFund = () => {
                <h1 className='mb-4' style={{marginTop: "100px"}}>List Donation</h1>
                 {/* <CardListDonation />
                 <CardListDonation /> */}
-                {listDonates.map((listDonate, index) => (
-                    <div key={listDonate.id + index}>
-                        <CardListDonation listDonate={ listDonate }/>
+                {donos&&donos.filter(dono => dono.status == "Approved").map((dono, index) => (
+                    <div key={dono.id + index}>
+                        <PendingDonation donoData = { dono } funcLoad = { loadDonate }/>
                     </div>
                 ))}
 
                 <h1 className='mb-4' style={{marginTop: "40px"}}>Donation has not been approved</h1>
                     {/* <CardListDonation />
                     <CardListDonation /> */}
-                    {donos&&donos.map((dono, index) => (
+                    {donos&&donos.filter((dono) => dono.status == "Pending").map((dono, index) => (
                         <div key={dono.id + index}>
-                            <PendingDonation donoData = { dono }/>
+                            <PendingDonation donoData = { dono } funcLoad = { loadDonate }/>
                         </div>
                     ))}
                 </div> 

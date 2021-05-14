@@ -1,9 +1,9 @@
-const {User} = require('../../models');
+const {User, Donate, Fund} = require('../../models');
 
 exports.getUsers = async (req, res) => {
     try {
         const users = await User.findAll();
-        res.status(200).send({
+        res.send({
           status: "success",
           data: {
             users
@@ -11,7 +11,50 @@ exports.getUsers = async (req, res) => {
         });
     } catch (error) {
         console.log(error);
-        res.status(404).send({
+        res.send({
+            status: "failed",
+            message: "no data found"
+        })
+    }
+}
+
+exports.profile = async (req, res) => {
+    const id = req.userId
+    try {
+        let users = await User.findOne({where: {id},
+          include: [
+            {
+              model: Donate,
+              attributes: {
+                exclude: ["createdAt", "updatedAt"]
+              }
+            },
+            
+            {
+              model: Fund,
+              attributes: {
+                exclude: ["createdAt", "updatedAt"]
+              }
+            }
+          ],
+        });
+
+        users = JSON.parse(JSON.stringify(users));
+        users = [users].map((user) => {
+          return {
+            ...user
+          }
+        })
+        console.log(users);
+        res.send({
+          status: "success",
+          data: {
+            users
+          }
+        });
+    } catch (error) {
+        console.log(error);
+        res.send({
             status: "failed",
             message: "no data found"
         })
@@ -77,4 +120,31 @@ exports.deleteUser = async (req, res) => {
               message: "server error"
           })
     }
+}
+
+exports.socketProfile = async (req, res) => {
+  const id = req.userId
+  try {
+      let users = await User.findOne({where: {id}});
+
+      users = JSON.parse(JSON.stringify(users));
+      users = [users].map((user) => {
+        return {
+          ...user
+        }
+      })
+      console.log(users);
+      res.send({
+        status: "success",
+        data: {
+          users
+        }
+      });
+  } catch (error) {
+      console.log(error);
+      res.send({
+          status: "failed",
+          message: "no data found"
+      })
+  }
 }

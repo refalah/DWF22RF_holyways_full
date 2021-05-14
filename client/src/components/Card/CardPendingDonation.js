@@ -2,12 +2,12 @@ import React, {useState, useContext} from 'react'
 import {useParams} from 'react-router-dom'
 import ModalApprove from '../Modal/ModalApprove'
 
-const CardPendingDonation = ({donoData}) => {
+const CardPendingDonation = ({donoData, funcLoad}) => {
     const params = useParams();
     const {id} = params;
     const {donateAmount, status, proofAttachment, createdAt} = donoData;
     
-
+    //funcLoad()
     const [isOpen, setIsOpen] = useState(false);
     return (
         <div>
@@ -27,7 +27,7 @@ const CardPendingDonation = ({donoData}) => {
                         ) : (
                             <div></div>
                         )}
-                        <ModalApprove donoData ={ donoData } open={isOpen} onClose={() => setIsOpen(false)}></ModalApprove>
+                        <ModalApprove donoData ={ donoData } loadDono = {funcLoad} open={isOpen} onClose={() => setIsOpen(false)}></ModalApprove>
                     </div>
                 </div>
             </div> 

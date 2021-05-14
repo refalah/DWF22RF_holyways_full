@@ -5,7 +5,7 @@ import { API } from "../../config/api";
 import {useHistory, useParams} from 'react-router-dom'
 import pendingDonates from '../../fakeData/penDonate.json'
 
-const ModalApprove = ({open, onClose, donoData}) => {
+const ModalApprove = ({open, onClose, donoData, loadDono}) => {
     const params = useParams();
     const router = useHistory();
     const {id, donateAmount, status, proofAttachment, createdAt, image_url} = donoData;
@@ -16,7 +16,8 @@ const ModalApprove = ({open, onClose, donoData}) => {
     const handleApprove = async () => {
         try {
             await API.patch(`/approve/${id}`);
-            router.push(`/fund/${id}`)
+            loadDono();
+            //router.push(`/fund/${id}`)
             onClose();
         } catch (error) {
             console.log(error);

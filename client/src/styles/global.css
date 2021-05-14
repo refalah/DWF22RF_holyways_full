@@ -108,7 +108,11 @@ h3 {
 }
 
 #basic-nav-dropdown {
-    text-align: left;
+    position: relative;
+    inset: 0px auto auto 0px;
+    margin: 0px;
+    /* transform: translate(-169px, 116px); */
+    /* text-align: left; */
     color: transparent;
     height: 60px;
     width: 60px;
@@ -117,8 +121,14 @@ h3 {
     background-position: 50% 50%;
     background-size: 60px;
     border: none;
+    top: 0;
     margin-top: 20%;
 }
+
+/* .dropdown-menu.show {
+    position: absolute;
+    left: 0;
+} */
 
 .drop-container {
     border-radius: 10px;

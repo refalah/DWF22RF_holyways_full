@@ -99,9 +99,9 @@ exports.getFund = async (req, res) => {
               //   //as: "conjuction",
               //   //attributes: []
               // },
-              attributes: {
-                exclude: ["createdAt", "updatedAt"]
-              }
+              // attributes: {
+              //   exclude: ["createdAt", "updatedAt"]
+              // }
             }
         ],
   
@@ -118,7 +118,7 @@ exports.getFund = async (req, res) => {
           };
         });
         
-        // console.log(funds)
+        //console.log(funds)
           
         res.send({
           status: "success",
@@ -232,6 +232,32 @@ exports.fundDetails = async (req, res) => {
         let funds = await Fund.findOne({where: {id}});
 
         funds = JSON.parse(JSON.stringify(funds));   
+      
+          
+        res.send({
+          status: "success",
+          data: {
+            funds
+          }
+        });
+    } catch (error) {
+        console.log(error)
+        res.send({
+            status: "failed",
+            message: "something went wrong"
+        })
+    }
+}
+
+exports.fundUser = async (req, res) => {
+    
+
+    try {
+        let funds = await Fund.findAll();
+
+        funds = JSON.parse(JSON.stringify(funds));   
+
+        
       
           
         res.send({

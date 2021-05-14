@@ -92,3 +92,58 @@ exports.getDonate = async (req, res) => {
     }
 }
 
+exports.getUserDonate = async (req, res) => {
+  
+    //const id = req.params.id;
+    const id = req.userId;
+
+    try {
+
+      // const user = await User.findOne({where:{id}});
+      // user = JSON.parse(JSON.stringify(user));
+      // user = user.map(userData => userData.id);
+      // console.log(user)
+    
+    let donos = await Donate.findAll({where: {userId : id},
+        include: [
+          {
+            model: User,
+            attributes: {
+              exclude: ["createdAt", "updatedAt", "password"]
+            }
+          },
+          
+          {
+            model: Fund
+          }
+        ],
+      
+    });
+
+      donos = JSON.parse(JSON.stringify(donos));
+      donos = donos.map((dono) => {
+        return {
+          ...dono,
+          image_url: process.env.PATH_KEY + dono.proofAttachment
+        };
+      });
+      
+      console.log(donos)
+
+      res.send({
+        status: "success",
+        data: {
+          donos
+        }
+    });
+
+
+    } catch (error) {
+        console.log(error);
+        res.send({
+            status: "failed",
+            message: "server error"
+        })
+    }
+}
+
