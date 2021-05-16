@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react'
 import {useParams, useHistory} from 'react-router-dom'
 import { Form, FormFile } from "react-bootstrap";
 import { API } from "../../../config/api";
-
+require('dotenv').config();
 
 function EditFund() {
     const params = useParams();
@@ -14,7 +14,7 @@ function EditFund() {
 
     const [form, setForm] = useState({
         title: "",
-        //thumbnail: "",
+        thumbnail: null,
         goal: "",
         description: ""
     });
@@ -35,7 +35,7 @@ function EditFund() {
     const onChange = (e) => {
         setForm({
             ...form,
-            [e.target.name]: e.target.type === "file" ? e.target.files : e.target.value
+            [e.target.name]: e.target.type === "file" ? e.target.files[0] : e.target.value
         })
     };
 
@@ -84,6 +84,24 @@ function EditFund() {
         }
     }
 
+    const [chosenFile, setChosenFile] = useState()
+   
+    useEffect(() => {
+        //loadFund();
+        if(form.thumbnail){
+            setChosenFile(`http://localhost:5000/uploads/${form.thumbnail}`);
+            return;
+        }
+
+        // const objectUrl = URL.createObjectURL(form.thumbnail);
+        // setChosenFile(objectUrl);
+
+        // return () => URL.revokeObjectURL(objectUrl);
+
+    }, [form.thumbnail])
+
+    console.log(form.thumbnail);
+
 
     return (
         <div>
@@ -110,9 +128,11 @@ function EditFund() {
                   
                     <input type="file" id="add-thumb" name="thumbnail" onChange={(e) => onChange(e)} hidden/>
                     <label for="add-thumb" id="label-thumb">Attach Thumbnail</label>
-                    {/* <span id="file-chosen">{chosenFile}</span> */}
-                    <br />
-                    <br />
+                    <br></br>                    
+                    {<img src={chosenFile} style={{
+                        maxHeight: "200px",
+                        padding: "10px 0"
+                    }}/>}
                     <Form.Control type="number" value={form.goal} name="goal" onChange={(e) => onChange(e)}/>
                     <br />
                     <Form.Control as="textarea" type="text" value={form.description} rows={10} name="description" onChange={(e) => onChange(e)}/>

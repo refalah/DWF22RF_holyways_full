@@ -43,13 +43,14 @@ const reducer = (state, action) => {
         //         ...state,
         //         isLogin: false
         //     };
+        
         case "USER_SUCCESS":
         case "LOGIN_SUCCESS":
             localStorage.setItem("token", payload.token);
             return {
                 ...state,
                 isLogin: true,
-                user: payload
+                user: {...payload}
             };
         case "AUTH_ERROR":
         case "LOGOUT":

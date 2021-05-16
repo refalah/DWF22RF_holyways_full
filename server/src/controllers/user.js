@@ -123,28 +123,14 @@ exports.deleteUser = async (req, res) => {
 }
 
 exports.socketProfile = async (req, res) => {
-  const id = req.userId
-  try {
-      let users = await User.findOne({where: {id}});
+  //const id = req.userId
+    let users = await User.findAll();
 
-      users = JSON.parse(JSON.stringify(users));
-      users = [users].map((user) => {
-        return {
-          ...user
-        }
-      })
-      console.log(users);
-      res.send({
-        status: "success",
-        data: {
-          users
-        }
-      });
-  } catch (error) {
-      console.log(error);
-      res.send({
-          status: "failed",
-          message: "no data found"
-      })
-  }
+    users = JSON.parse(JSON.stringify(users));
+    users = [users].map((user) => {
+      return {
+        ...user
+      }
+    })
+  
 }

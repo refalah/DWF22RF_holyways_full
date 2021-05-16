@@ -16,12 +16,10 @@ const NewFund = () => {
 
     const [message, setMessage] = useState('');
 
-    const { title, thumbnail, goal, description } = form;
-
     const onChange = (e) => {
         setForm({
             ...form,
-            [e.target.name]: e.target.type === "file" ? e.target.files : e.target.value
+            [e.target.name]: e.target.type === "file" ? e.target.files[0] : e.target.value
         })
     };
 
@@ -60,11 +58,17 @@ const NewFund = () => {
     const [chosenFile, setChosenFile] = useState()
    
     useEffect(() => {
-        if(!form.imageFile){
-            setChosenFile("No file chosen")
+        if(!form.thumbnail){
+            setChosenFile(undefined);
+            return;
         }
 
-    }, [form.imageFile])
+        const objectUrl = URL.createObjectURL(form.thumbnail);
+        setChosenFile(objectUrl);
+
+        return () => URL.revokeObjectURL(objectUrl);
+
+    }, [form.thumbnail])
 
     return (
         <div>
@@ -91,9 +95,12 @@ const NewFund = () => {
                   
                     <input type="file" id="add-thumb" name="thumbnail" onChange={(e) => onChange(e)} hidden/>
                     <label for="add-thumb" id="label-thumb">Attach Thumbnail</label>
-                    <span id="file-chosen">{chosenFile}</span>
-                    <br />
-                    <br />
+                    {/* <span id="file-chosen">{chosenFile}</span> */}
+                    <br></br>                    
+                    {<img src={chosenFile} style={{
+                        maxHeight: "200px",
+                        padding: "10px 0"
+                    }}/>}
                     <Form.Control type="number" placeholder="Goals Donation" name="goal" onChange={(e) => onChange(e)}/>
                     <br />
                     <Form.Control as="textarea" type="text" placeholder="Description" rows={10} name="description" onChange={(e) => onChange(e)}/>

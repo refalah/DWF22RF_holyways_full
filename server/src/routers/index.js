@@ -5,9 +5,10 @@ const router = express.Router();
 const { authToken } = require('../middlewares/authMiddleware');
 const { uploadFile } = require('../middlewares/uploadFile');
 //Auth
-const { register, login } = require('../controllers/auth');
+const { register, login, checkAuth } = require('../controllers/auth');
 router.post('/register', register);
 router.post('/login', login);
+router.get("/check-auth", authToken, checkAuth);
 
 //User
 const { createUser, getUsers, deleteUser, profile } = require('../controllers/user');

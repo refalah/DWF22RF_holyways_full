@@ -70,10 +70,17 @@ function ModalDonate({open, onClose, funcLoad}) {
                             
                             <input type='number' name='donateAmount' placeholder='Nominal Donation' className=' grab-input'  onChange={(e) => onChange(e)}></input>
 
-                            <div className='img-proof'>
+                            <div className='img-proof' style={{
+                                marginBottom : '20px'
+                            }}>
                                 <input type="file" id="add-thumb" name="proofAttachment" onChange={(e) => onChange  (e)} hidden/>
-                                <label for="add-thumb" id="label-thumb">Attach Thumbnail</label>
-                                <p>*transfers can be made to holyways accounts</p>
+                                <label for="add-thumb" id="label-thumb" style={{
+                                    marginRight : "50px",
+                                    width: "50%"
+                                }}>Attach Thumbnail</label>
+                                <p style={{
+                                    width: "70%"
+                                }}>*transfers can be made to holyways accounts</p>
                             </div>
                         </div>
 

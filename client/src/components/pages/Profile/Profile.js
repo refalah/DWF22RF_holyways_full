@@ -4,11 +4,12 @@ import History from '../../Card/CardHistory'
 import CardProfile from '../../Card/CardProfile'
 import {API} from '../../../config/api'
 import {io} from 'socket.io-client'
+let socket;
 
 function Profile() {
     
-
-    const [user, setUser] = useState([]);
+    
+    const [users, setUsers] = useState([]);
     const [funds, setFunds] = useState([]);
     const [donos, setDonos] = useState([]);
 
@@ -19,10 +20,11 @@ function Profile() {
         // } catch (error) {
         //     console.log(error);
         // }
-        // await socket.emit('load user');
-        // await socket.on('user', (data) => {
-        //     setUser(data);
-        // })
+        await socket.emit('load users');
+        await socket.on('users', (data) => {
+            console.log(data);
+            setUsers(data);
+        })
     }
 
     const loadDonate = async () => {
@@ -44,16 +46,22 @@ function Profile() {
     }
 
     useEffect(() => {
-        loadUser();
+        ///loadUser();
         loadDonate();
         loadFund();
+        const socket = io('http://localhost:5000/')
+        loadUser(socket);
+
     }, []);
 
     return (
         <>
             <div className="container mt-5">
                 <div className="profile-container">
-                    <CardProfile/>
+                    {users?.map((user) => {
+                        <CardProfile user = {user} />
+                    })}
+                    
                     <div className='history-container'>
                         <h1>History Donation</h1>
                         {donos&&donos.map((dono, index) => (

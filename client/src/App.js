@@ -1,8 +1,9 @@
-import React from 'react'
-
+import React, {useContext, useEffect} from 'react'
+import {UserContext} from './contexts/userContext'
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import {UserContextProvider} from './contexts/userContext'
 import {ModalContextProvider} from './contexts/modalContext'
+import {API, setAuthToken} from './config/api'
 
 import Navbar from './components/Navbar/Navbar'
 import ModalRegister from './components/Modal/ModalRegister'
@@ -20,8 +21,43 @@ import ViewFund from './components/pages/ViewFund/ViewFund';
 import ScrollIntoView from "./components/ScrollIntoView";
 import EditFund from './components/pages/EditFund/EditFund'
 
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 function App() {
+
+  // const [state, dispatch] = useContext(UserContext);
+
+  // const checkUser = async () => {
+  //   try {
+  //     const response = await API.get('/check-auth');
+
+  //     if (response.status === 404) {
+  //       return dispatch({
+  //         type: "AUTH_ERROR"
+  //       })
+  //     };
+
+  //     let payload = response.data.data.user;
+  //     payload.token = localStorage.token;
+
+  //     dispatch({
+  //       type: "AUTH_SUCCESS",
+  //       payload
+  //     })
+
+  //   } catch (error) {
+  //     dispatch({
+  //       type: "AUTH_ERROR"
+  //     })
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   checkUser();
+  // }, []);
+
   return (
     <>
       <UserContextProvider>

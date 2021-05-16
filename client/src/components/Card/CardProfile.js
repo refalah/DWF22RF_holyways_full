@@ -1,5 +1,6 @@
 
-const CardProfile = () => {
+const CardProfile = ({user}) => {
+    const {fullName, email, id} = user;
     return (
         <div>
             <div className='profile-card'>
@@ -7,15 +8,15 @@ const CardProfile = () => {
                 <div className='profile-data'>
                     <div className='name'>
                         <p className='red-title'>Full Name</p>
-                        <p>Kurt Cobain</p>
+                        <p>{user.fullName}</p>
                     </div>
                     <div className='email'>
                         <p className='red-title'>Email</p>
-                        <p>kurt@nirvana.com</p>
+                        <p>{email}</p>
                     </div>
                     <div className='phone'>
                         <p className='red-title'>Phone</p>
-                        <p>555-1235</p>
+                        <p>{id}</p>
                     </div>
                 </div>
             </div>
