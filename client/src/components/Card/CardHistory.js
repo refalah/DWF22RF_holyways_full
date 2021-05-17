@@ -6,6 +6,8 @@ const CardHistory = ({userData}) => {
 
     const {donateAmount, createdAt, status, id} = userData;
     //console.log(userData.Fund.createdAt);
+    const date = new Date(createdAt);
+    const newFormDate = new Intl.DateTimeFormat(['ban', 'en'], { dateStyle: 'full' }).format(date)
 
     return (
         <div>
@@ -15,7 +17,7 @@ const CardHistory = ({userData}) => {
                         <p>{userData.Fund&&userData.Fund.title}</p>
                     </div>
                     <div className='history-date'>
-                        <p>{createdAt}</p>
+                        <p>{newFormDate}</p>
                     </div>
                     <div className='history-status'>
                         <p>{donateAmount&&convertToRupiah(donateAmount)}</p>

@@ -6,6 +6,9 @@ const CardPendingDonation = ({donoData, funcLoad}) => {
     const params = useParams();
     const {id} = params;
     const {donateAmount, status, proofAttachment, createdAt} = donoData;
+
+    const date = new Date(createdAt);
+    const newFormDate = new Intl.DateTimeFormat(['ban', 'en'], { dateStyle: 'full' }).format(date)
     
     //funcLoad()
     const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +21,7 @@ const CardPendingDonation = ({donoData, funcLoad}) => {
                         <p>{donoData.User.fullName}</p>
                     </div>
                     <div className='list-donation-date'>
-                        <p>{createdAt}</p>
+                        <p>{newFormDate}</p>
                     </div>
                     <div className='list-donation-total'>
                         <p>{donateAmount}</p>

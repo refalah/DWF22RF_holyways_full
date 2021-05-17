@@ -14,7 +14,7 @@ function EditFund() {
 
     const [form, setForm] = useState({
         title: "",
-        //thumbnail: "",
+        thumbnail: null,
         goal: "",
         description: ""
     });
@@ -55,19 +55,16 @@ function EditFund() {
             formData.append("imageFile", form.thumbnail[0], form.thumbnail[0].name)
             formData.set("goal", form.goal);
             formData.set("description", form.description);
+            console.log(formData)
+
+            
+
 
             const response = await API.patch(`/fund/${id}`, formData, config);
 
             //setIdForUpdate(null);
 
-            // setForm({
-            //     title: "",
-            //     thumbnail: "",
-            //     goal: "",
-            //     description: ""
-                
-            // })
-
+            
             setMessage(response.data.message);
 
             if(response.data.status === "failed"){
@@ -76,13 +73,12 @@ function EditFund() {
                 router.push("/raise-fund");
             }
 
-           
-
-
         } catch (error) {
             console.log(error);
         }
     }
+
+    console.log(form);
 
 
     return (

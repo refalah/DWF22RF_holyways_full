@@ -10,11 +10,12 @@ router.post('/register', register);
 router.post('/login', login);
 
 //User
-const { createUser, getUsers, deleteUser, profile } = require('../controllers/user');
+const { createUser, getUsers, deleteUser, profile, editProfile } = require('../controllers/user');
 router.post("/user", createUser);
 router.delete("/user/:id", deleteUser);
 router.get("/users", authToken, getUsers);
-router.get("/profile/", authToken, profile);
+router.get("/profile", authToken, profile);
+router.patch("/edit-profile", uploadFile("imageFile"), authToken, editProfile);
 
 //Donate
 const {  createDonate, getDonate, approveDonate, getUserDonate } = require('../controllers/donate');

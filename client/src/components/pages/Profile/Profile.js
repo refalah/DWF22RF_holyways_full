@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react'
-import {useParams} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 import History from '../../Card/CardHistory'
 import CardProfile from '../../Card/CardProfile'
 import {API} from '../../../config/api'
@@ -7,22 +7,19 @@ import {io} from 'socket.io-client'
 
 function Profile() {
     
+    const router = useHistory();
 
     const [user, setUser] = useState([]);
     const [funds, setFunds] = useState([]);
     const [donos, setDonos] = useState([]);
 
-    const loadUser = async (socket) => {
-        // try {
-        //     const response = await API.get(`/profile/`);
-        //     setUsers(response.data.data.users);
-        // } catch (error) {
-        //     console.log(error);
-        // }
-        // await socket.emit('load user');
-        // await socket.on('user', (data) => {
-        //     setUser(data);
-        // })
+    const loadUser = async () => {
+        try {
+            const response = await API.get(`/profile`);
+            setUser(response.data.data.users);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const loadDonate = async () => {
@@ -49,11 +46,23 @@ function Profile() {
         loadFund();
     }, []);
 
+    console.log(user);
+
+    const goEditProfile = () => {
+        router.push('edit-profiles');
+    }
+
     return (
         <>
             <div className="container mt-5">
+                 <div className='fund-header' style={{
+                     marginBottom: "50px"
+                 }}>
+                    <h4>My Profile</h4>
+                    <button onClick={goEditProfile}><a>Edit Profile</a></button>
+                </div>
                 <div className="profile-container">
-                    <CardProfile/>
+                    <CardProfile user = {user}/>
                     <div className='history-container'>
                         <h1>History Donation</h1>
                         {donos&&donos.map((dono, index) => (

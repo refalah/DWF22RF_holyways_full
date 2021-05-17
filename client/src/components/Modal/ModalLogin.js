@@ -68,6 +68,8 @@ function ModalLogin({open, onClose}) {
                 payload: response.data.data.user
             });
 
+            onClose()
+
             // router.push("/");
 
         } catch (error) {

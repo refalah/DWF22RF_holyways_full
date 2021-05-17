@@ -21,7 +21,7 @@ const NewFund = () => {
     const onChange = (e) => {
         setForm({
             ...form,
-            [e.target.name]: e.target.type === "file" ? e.target.files : e.target.value
+            [e.target.name]: e.target.type === "file" ? e.target.files[0] : e.target.value
         })
     };
 
@@ -35,7 +35,7 @@ const NewFund = () => {
 
             const formData = new FormData();
             formData.set("title", form.title);
-            formData.append("imageFile", form.thumbnail[0], form.thumbnail[0].name)
+            formData.append("imageFile", form.thumbnail, form.thumbnail.name)
             formData.set("goal", form.goal);
             formData.set("description", form.description);
            
@@ -60,11 +60,17 @@ const NewFund = () => {
     const [chosenFile, setChosenFile] = useState()
    
     useEffect(() => {
-        if(!form.imageFile){
-            setChosenFile("No file chosen")
+        if(!form.thumbnail){
+            setChosenFile(undefined);
+            return;
         }
 
-    }, [form.imageFile])
+        const objectUrl = URL.createObjectURL(form.thumbnail);
+        setChosenFile(objectUrl);
+
+        return () => URL.revokeObjectURL(objectUrl);
+
+    }, [form.thumbnail])
 
     return (
         <div>
@@ -91,8 +97,11 @@ const NewFund = () => {
                   
                     <input type="file" id="add-thumb" name="thumbnail" onChange={(e) => onChange(e)} hidden/>
                     <label for="add-thumb" id="label-thumb">Attach Thumbnail</label>
-                    <span id="file-chosen">{chosenFile}</span>
-                    <br />
+                    <br></br>                    
+                    {<img src={chosenFile} style={{
+                        maxHeight: "200px",
+                        padding: "10px 0"
+                    }}/>}
                     <br />
                     <Form.Control type="number" placeholder="Goals Donation" name="goal" onChange={(e) => onChange(e)}/>
                     <br />

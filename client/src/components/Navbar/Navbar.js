@@ -1,10 +1,11 @@
 import { Modal } from 'bootstrap'
 import { NavDropdown } from "react-bootstrap";
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import ModalLogin from '../Modal/ModalLogin'
 import ModalRegister from '../Modal/ModalRegister'
 import { UserContext } from '../../contexts/userContext'
+import { API } from "../../config/api";
 
 function Navbar(){
     const [ state, ] = useContext(UserContext)
@@ -38,11 +39,28 @@ function Navbar(){
 
     const router = useHistory();
 
+    const [user, setUser] = useState([]);
+    const loadUser = async () => {
+        try {
+            const response = await API.get(`/profile`);
+            setUser(response.data.data.users);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        loadUser();
+    }, []);
+
+    console.log(user.picture)
+
     return(
         <>
             <nav className="navbar">
                 <div className="navbar-container">
                     <Link to="/" className="navbar-logo">
+                        
                         <img src="/Icon.svg" alt="icon-holyways" /> 
                     </Link>
                     <ul className="nav-menu">
@@ -63,8 +81,37 @@ function Navbar(){
                             <div style={{
                                 display:'flex'
                             }}>
+
+                            {/* {!user.picture ? (
+                                <NavDropdown id="basic-nav-dropdown" style={{                                
+                                    backgroundImage: `url('http://localhost:5000/uploads/${user.picture}')`,
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundPosition: '50% 50%',
+                                    marginTop: "20%"
+                                }}>
+                            ) : (
+                                <NavDropdown id="basic-nav-dropdown" style={{                                
+                                    backgroundImage: `url('../User.png')`,
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundPosition: '50% 50%',
+                                    marginTop: "20%"
+                                }}>
+                            )} */}
                                 
-                            <NavDropdown id="basic-nav-dropdown" style={{}}>
+                                <NavDropdown id="basic-nav-dropdown" style={{                                
+                                    backgroundImage: `url('../User.png')`,
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundPosition: '50% 50%',
+                                    marginTop: "20%"
+                                }}>
+                            {/* <NavDropdown id="basic-nav-dropdown" style={{                                
+                                backgroundImage: `url('http://localhost:5000/uploads/${user.picture}')`,
+                                objectFit: "cover",
+                                backgroundSize: "70px",
+                                backgroundRepeat: 'no-repeat',
+                                backgroundPosition: '50% 50%',
+                                marginTop: "20%"
+                            }}> */}
                                 <div className='drop-container'>
                                 <NavDropdown.Item className='dropdown-item' href="#action/3.1" onClick={() => router.push("/profile")}>
                                     

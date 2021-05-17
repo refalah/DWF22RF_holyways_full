@@ -116,7 +116,7 @@ h3 {
     color: transparent;
     height: 60px;
     width: 60px;
-    background-image: url('../images/User.png');
+    /* background-image: url('../images/User.png'); */
     background-repeat: no-repeat;
     background-position: 50% 50%;
     background-size: 60px;
@@ -443,6 +443,7 @@ h6, p {
 /* Card Profile */
 
 .profile-card img {
+    object-fit: cover;
     width: 180px;
     height: 221.79px;
 }

@@ -40,6 +40,12 @@ module.exports = (sequelize, DataTypes) => {
       //   notNull: {msg: 'User must have a password'},
       //   notEmpty: {msg: 'Password must not be empty'},
       // }
+    },
+    picture: {
+      type: DataTypes.STRING
+    },
+    phone: {
+      type: DataTypes.INTEGER
     }
   }, {
     sequelize,

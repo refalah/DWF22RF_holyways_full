@@ -44,7 +44,7 @@ function Home() {
                     <div className='row'>
                         {funds&&funds.slice(-3).map((fund, index) => (
                             <div className='col-sm-4' key={fund.id + index}>
-                                <Card fundData={ fund } btnName = { 'Donate' } routeName = { "donate-detail" }/>
+                                <Card fundData={ fund } btnName = { 'Donate' } routeName = { "fund" }/>
                             </div>
                         ))}
                         

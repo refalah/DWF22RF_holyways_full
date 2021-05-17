@@ -40,11 +40,12 @@ exports.profile = async (req, res) => {
         });
 
         users = JSON.parse(JSON.stringify(users));
-        users = [users].map((user) => {
-          return {
-            ...user
-          }
-        })
+        // users = [users].map((user) => {
+        //   return {
+        //     ...user,
+        //     image_url: process.env.PATH_KEY + user.picture
+        //   }
+        // })
         console.log(users);
         res.send({
           status: "success",
@@ -59,6 +60,33 @@ exports.profile = async (req, res) => {
             message: "no data found"
         })
     }
+}
+
+exports.editProfile = async (req, res) => {
+  const id = req.userId;
+  const {fullName, email, picture, phone} = req.body;
+  
+  try {
+      const picture = req.files.imageFile[0].filename;
+
+      const edit = await User.update({fullName, email, picture, phone}, {where: {id}});
+
+      console.log(edit)
+
+      res.send({
+          status: "success",
+          data: {
+            edit
+          }
+        });
+
+  } catch (error) {
+      console.log(error);
+      res.send({
+          status: "failed",
+          message: "something went wrong"
+      })
+  }
 }
 
 exports.createUser = async (req, res) => {

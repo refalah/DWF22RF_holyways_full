@@ -1,21 +1,31 @@
+import React, {useState, useContext, useEffect} from 'react'
+import {API} from '../../config/api'
 
-const CardProfile = () => {
+const CardProfile = ({user}) => {
+
+
+    console.log(user);
+
     return (
         <div>
             <div className='profile-card'>
-                <img src='/profile-test.png' className=''></img>
+                {!user.picture ? (
+                    <img src='/profile-test.png' className=''></img>
+                ) : (
+                    <img src={`http://localhost:5000/uploads/${user.picture}`} className=''></img>
+                )}
                 <div className='profile-data'>
                     <div className='name'>
                         <p className='red-title'>Full Name</p>
-                        <p>Kurt Cobain</p>
+                        <p>{user.fullName}</p>
                     </div>
                     <div className='email'>
                         <p className='red-title'>Email</p>
-                        <p>kurt@nirvana.com</p>
+                        <p>{user.email}</p>
                     </div>
                     <div className='phone'>
                         <p className='red-title'>Phone</p>
-                        <p>555-1235</p>
+                        <p>{user&&user.phone}</p>
                     </div>
                 </div>
             </div>
